@@ -14,7 +14,7 @@ import db;
 import room;
 import pm;
 
-import std.stdio : write, writeln;
+import std.stdio : write, writeln, stdout;
 import std.socket;
 import std.conv : ConvException, to;
 import std.array : split, join, replace;
