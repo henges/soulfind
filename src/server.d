@@ -54,6 +54,7 @@ private void help(string[] args)
 		default_db_file, ")"
 	);
 	writeln("\t-d, --daemon : fork in the background");
+	stdout.flush();
 }
 
 private int main(string[] args)
@@ -135,6 +136,7 @@ class Server
 				);
 			else
 				writeln();
+			stdout.flush();
 			return 1789;
 		}
 
@@ -143,6 +145,7 @@ class Server
 			"Soulfind %s process %s listening on port %s"
 			.format(VERSION ~ norm, thisProcessID, port)
 		);
+		stdout.flush();
 
 		auto read_socks = new SocketSet(max_users + 1);
 		auto write_socks = new SocketSet(max_users + 1);
@@ -181,6 +184,7 @@ class Server
 						writeln(
 							"Connection accepted from ", new_sock.remoteAddress
 						);
+						stdout.flush();
 					}
 
 					auto user = new User(
@@ -311,6 +315,7 @@ class Server
 			user.send_message(msg);
 		}
 		debug (msg) writeln();
+		debug (msg) stdout.flush();
 	}
 
 	void admin_message(User admin, string message)
@@ -387,6 +392,7 @@ class Server
 
 			case "kickall":
 				debug (user) writeln("Admin request to kick ALL users...");
+				debug (user) stdout.flush();
 				kick_all_users();
 				break;
 
@@ -599,10 +605,12 @@ class Server
 
 		if (!db.user_exists(username)) {
 			debug (user) writeln("New user ", username, " registering");
+			debug (user) stdout.flush();
 			db.add_user(username, encode_password(password));
 			return null;
 		}
 		debug (user) writeln("User ", username, " is registered");
+		debug (user) stdout.flush();
 
 		if (db.is_banned(username))
 			return "BANNED";
