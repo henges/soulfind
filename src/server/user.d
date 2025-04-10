@@ -674,6 +674,8 @@ class User
                 if (!user)
                     break;
 
+                auto sender = server.get_user(username);
+
                 debug (user) writefln!(
                     "User %s @ %s connecting indirectly to peer %s @ %s")(
                     blue ~ username ~ norm, bold ~ h_address ~ norm,
@@ -681,8 +683,8 @@ class User
                 );
 
                 scope response_msg = new SConnectToPeer(
-                    user.username, msg.type, user.ip_address, user.port,
-                    msg.token, user.privileged
+                    sender.username, msg.type, sender.ip_address, sender.port,
+                    msg.token, sender.privileged
                 );
                 user.send_message(response_msg);
                 break;
