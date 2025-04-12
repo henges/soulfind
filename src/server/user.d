@@ -396,6 +396,11 @@ class User
         if (send_len == Socket.ERROR)
             return false;
 
+        writefln!(
+            "Sent %d bytes to user %s")(
+            send_len, blue ~ username ~ norm
+        );
+
         out_buf = out_buf[send_len .. $];
         return true;
     }
